@@ -1,7 +1,7 @@
 export default function Detail() {
   return (
     <div className="flex-1">
-      <div className="px-5 py-[30px] flex flex-col items-center gap-5 border-b border-b-[#dddddd35]">
+      <div className="px-5 py-2.5 flex flex-col items-center gap-[5px] border-b border-b-[#dddddd35]">
         <img
           src="/public/mo.jpg"
           alt="avatar"
@@ -10,7 +10,7 @@ export default function Detail() {
         <h2>Mo Atef</h2>
         <p>Lorem ipsum dolor sit amet..</p>
       </div>
-      <div className="p-5 flex flex-col gap-2.5">
+      <div className="p-5 flex flex-col gap-2.5 ">
         <div className="">
           <div className="flex items-center justify-between">
             <span>Chat Settings</span>
@@ -87,8 +87,11 @@ export default function Detail() {
             />
           </div>
         </div>
-        <button className="py-2.5 px-5 bg-[rgba(230,74,105,0.55)] text-white border-0 rounded-[5px] cursor-pointer duration-[0.3s] hover:bg-[rgba(220,20,60,0.796)]">
+        <button className="p-[15px] bg-[rgba(230,74,105,0.55)] text-white border-0 rounded-[5px] cursor-pointer duration-[0.3s] hover:bg-[rgba(220,20,60,0.796)]">
           Block User
+        </button>
+        <button className="p-2.5 bg-[#1a73e8] text-white border-0 rounded-[5px] cursor-pointer duration-[0.3s] hover:bg-[#0653b7]">
+          Logout
         </button>
       </div>
     </div>

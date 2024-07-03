@@ -1,11 +1,15 @@
 import EmojiPicker from "emoji-picker-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Chat() {
   const [openEmoji, setOpenEmoji] = useState(false);
   const [textMessage, setTextMessage] = useState("");
 
-  const handelEmoji = (e) => {
+  const endRef = useRef(null);
+  useEffect(() => {
+    endRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, []);
+  const handleEmoji = (e) => {
     setTextMessage((text) => text + e.emoji);
     setOpenEmoji(false);
   };
@@ -158,6 +162,7 @@ export default function Chat() {
             <span className="text-[13px]">1 min ago</span>
           </div>
         </div>
+        <div ref={endRef}></div>
       </div>
       <div className="p-5 mt-auto flex items-center justify-between gap-5 border-t border-t-[#dddddd35]">
         <div className="flex gap-5">
@@ -192,10 +197,10 @@ export default function Chat() {
             onClick={() => setOpenEmoji((open) => !open)}
           />
           <div className="absolute left-0 bottom-[50px]">
-            <EmojiPicker open={openEmoji} onEmojiClick={handelEmoji} />
+            <EmojiPicker open={openEmoji} onEmojiClick={handleEmoji} />
           </div>
         </div>
-        <button className="bg-[#5183fe] px-5 py-2.5 border-0 rounded-[5px] cursor-pointer">
+        <button className="bg-[#5183fe] px-5 py-2.5 border-0 rounded-[5px] cursor-pointer duration-[0.3s] hover:bg-[#0653b7]">
           Send
         </button>
       </div>
