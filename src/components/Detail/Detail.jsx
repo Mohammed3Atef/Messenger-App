@@ -2,12 +2,11 @@ import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { useChatStore } from "../../library/chatStore";
 import { auth, db } from "../../library/firebase";
 import { useUserStore } from "../../library/userStore";
-import {
-  arrowUp,
-  arrowDown,
-  mo,
-  download,
-} from "../../assets/images/arrowUp.jpg";
+
+import { arrowUp } from "../../assets/images/arrowUp.jpg";
+import { arrowDown } from "../../assets/images/arrowDown.jpg";
+import { mo } from "../../assets/images/mo.jpg";
+import { download } from "../../assets/images/download.jpg";
 
 export default function Detail() {
   const {

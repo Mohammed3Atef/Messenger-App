@@ -4,7 +4,9 @@ import { useUserStore } from "../../library/userStore";
 import { doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../../library/firebase";
 import { useChatStore } from "../../library/chatStore";
-import { minus, plus, avatar } from "../../assets/images/minus.jpg";
+import { minus } from "../../assets/images/minus.jpg";
+import { plus } from "../../assets/images/plus.jpg";
+import { avatar } from "../../assets/images/avatar.jpg";
 
 export default function ChatList() {
   const [chats, setChats] = useState([]);
