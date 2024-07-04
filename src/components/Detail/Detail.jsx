@@ -37,7 +37,7 @@ export default function Detail() {
     <div className="flex-1">
       <div className="px-5 py-[30px] flex flex-col items-center gap-[15px] border-b border-b-[#dddddd35]">
         <img
-          src={user?.avatar || "/public/avatar.png"}
+          src={user?.avatar || "../../../public/avatar.png"}
           alt="avatar"
           className="w-[100px] h-[100px] rounded-full object-cover"
         />
@@ -49,7 +49,7 @@ export default function Detail() {
           <div className="flex items-center justify-between">
             <span>Chat Settings</span>
             <img
-              src="/public/arrowUp.png"
+              src="../../../public/arrowUp.png"
               alt="setting"
               className="w-[30px] h-[30px] bg-[rgba(17,25,40,0.4)] p-2.5 rounded-full cursor-pointer"
             />
@@ -59,7 +59,7 @@ export default function Detail() {
           <div className="flex items-center justify-between">
             <span>Privacy & Help</span>
             <img
-              src="/public/arrowUp.png"
+              src="../../../public/arrowUp.png"
               alt="setting"
               className="w-[30px] h-[30px] bg-[rgba(17,25,40,0.4)] p-2.5 rounded-full cursor-pointer"
             />
@@ -69,7 +69,7 @@ export default function Detail() {
           <div className="flex items-center justify-between">
             <span>Shared photos</span>
             <img
-              src="/public/arrowDown.png"
+              src="../../../public/arrowDown.png"
               alt="setting"
               className="w-[30px] h-[30px] bg-[rgba(17,25,40,0.4)] p-2.5 rounded-full cursor-pointer"
             />
@@ -78,7 +78,7 @@ export default function Detail() {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-5">
                 <img
-                  src="/public/mo.jpg"
+                  src="../../../public/mo.jpg"
                   alt=""
                   className="w-[40px] h-[40px] rounded-[5px] object-cover"
                 />
@@ -87,7 +87,7 @@ export default function Detail() {
                 </span>
               </div>
               <img
-                src="/public/download.png"
+                src="../../../public/download.png"
                 alt="download"
                 className="w-[30px] h-[30px] bg-[rgba(17,25,40,0.4)] p-2.5 rounded-full cursor-pointer"
               />
@@ -98,7 +98,7 @@ export default function Detail() {
           <div className="flex items-center justify-between">
             <span>Shared Files</span>
             <img
-              src="/public/arrowUp.png"
+              src="../../../public/arrowUp.png"
               alt="setting"
               className="w-[30px] h-[30px] bg-[rgba(17,25,40,0.4)] p-2.5 rounded-full cursor-pointer"
             />
