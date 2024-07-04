@@ -1,15 +1,37 @@
-import { auth } from "../../library/firebase";
+import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
+import { useChatStore } from "../../library/chatStore";
+import { auth, db } from "../../library/firebase";
+import { useUserStore } from "../../library/userStore";
 
 export default function Detail() {
+  const { chatId, user, isCurrentUserBlocked, isReceiverBlocked, changeBlock } =
+    useChatStore();
+  const { currentUser } = useUserStore();
+
+  const handleBlock = async () => {
+    if (!user) return;
+
+    const userDocRef = doc(db, "users", currentUser.id);
+
+    try {
+      await updateDoc(userDocRef, {
+        blocked: isReceiverBlocked ? arrayRemove(user.id) : arrayUnion(user.id),
+      });
+      changeBlock();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="flex-1">
       <div className="px-5 py-2.5 flex flex-col items-center gap-[5px] border-b border-b-[#dddddd35]">
         <img
-          src="/public/mo.jpg"
+          src={user?.avatar || "/public/avatar.png"}
           alt="avatar"
           className="w-[100px] h-[100px] rounded-full object-cover"
         />
-        <h2>Mo Atef</h2>
+        <h2>{user?.username}</h2>
         <p>Lorem ipsum dolor sit amet..</p>
       </div>
       <div className="p-5 flex flex-col gap-2.5 ">
@@ -89,8 +111,15 @@ export default function Detail() {
             />
           </div>
         </div>
-        <button className="p-[15px] bg-[rgba(230,74,105,0.55)] text-white border-0 rounded-[5px] cursor-pointer duration-[0.3s] hover:bg-[rgba(220,20,60,0.796)]">
-          Block User
+        <button
+          onClick={handleBlock}
+          className="p-[15px] bg-[rgba(230,74,105,0.55)] text-white border-0 rounded-[5px] cursor-pointer duration-[0.3s] hover:bg-[rgba(220,20,60,0.796)]"
+        >
+          {isCurrentUserBlocked
+            ? "You are Blocked"
+            : isReceiverBlocked
+            ? "User Block"
+            : "Block User"}
         </button>
         <button
           onClick={() => auth.signOut()}

@@ -21,7 +21,8 @@ export default function Chat() {
     url: "",
   });
 
-  const { chatId, user } = useChatStore();
+  const { chatId, user, isCurrentUserBlocked, isReceiverBlocked } =
+    useChatStore();
   const { currentUser } = useUserStore();
 
   const endRef = useRef(null);
@@ -107,12 +108,12 @@ export default function Chat() {
         {/* User Info */}
         <div className="flex items-center gap-5">
           <img
-            src="/public/mo.jpg"
+            src={user?.avatar || "/public/mo.jpg"}
             alt="avatar"
             className="w-[60px] h-[60px] rounded-full object-cover"
           />
           <div className="flex flex-col gap-[5px]">
-            <span className="text-xl font-bold">Mo Atef</span>
+            <span className="text-xl font-bold">{user?.username}</span>
             <p className="text-sm font-light text-[#a5a5a5]">
               Lorem ipsum dolor, sit amet.
             </p>
@@ -222,10 +223,15 @@ export default function Chat() {
         {/* Text Input */}
         <input
           type="text"
-          placeholder="Type a message..."
-          className="flex-1 bg-[rgba(17,25,40,0.5)] border-0 outline-0 p-5 rounded-[10px] text-base"
+          placeholder={
+            isCurrentUserBlocked || isReceiverBlocked
+              ? "You cannot send a message"
+              : "Type a message..."
+          }
+          className="flex-1 bg-[rgba(17,25,40,0.5)] border-0 outline-0 p-5 rounded-[10px] text-base  disabled:cursor-not-allowed"
           value={textMessage}
           onChange={(e) => setTextMessage(e.target.value)}
+          disabled={isCurrentUserBlocked || isReceiverBlocked}
         />
         {/* Emoji Picker */}
         <div className="relative">
@@ -243,8 +249,9 @@ export default function Chat() {
         </div>
         {/* Send Button */}
         <button
+          disabled={isCurrentUserBlocked || isReceiverBlocked}
           onClick={handleSend}
-          className="bg-[#5183fe] px-5 py-2.5 border-0 rounded-[5px] cursor-pointer duration-[0.3s] hover:bg-[#0653b7]"
+          className="bg-[#5183fe] px-5 py-2.5 border-0 rounded-[5px] cursor-pointer duration-[0.3s] hover:bg-[#0653b7] disabled:bg-[#5182feb4] disabled:cursor-not-allowed"
         >
           Send
         </button>

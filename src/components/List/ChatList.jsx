@@ -8,6 +8,7 @@ import { useChatStore } from "../../library/chatStore";
 export default function ChatList() {
   const [chats, SetChats] = useState([]);
   const [addMode, SetAddMode] = useState(false);
+  const [input, SetInput] = useState("");
 
   const { currentUser } = useUserStore();
   const { chatId, changeChat } = useChatStore();
@@ -58,6 +59,10 @@ export default function ChatList() {
     }
   };
 
+  const filteredChats = chats.filter((c) =>
+    c.user.username.toLowerCase().includes(input.toLowerCase())
+  );
+
   return (
     <div className="flex-1 overflow-auto">
       <div className="flex items-center gap-5 p-5">
@@ -67,6 +72,7 @@ export default function ChatList() {
             type="text"
             placeholder="Search"
             className="bg-transparent outline-0	border-0	flex-1"
+            onChange={(e) => SetInput(e.target.value)}
           />
         </div>
         <img
@@ -76,7 +82,7 @@ export default function ChatList() {
           onClick={() => SetAddMode((open) => !open)}
         />
       </div>
-      {chats.map((chat) => (
+      {filteredChats.map((chat) => (
         <div
           style={{ backgroundColor: chat?.isSeen ? "transparent" : "#5183fe" }}
           onClick={() => handleSelect(chat)}
@@ -84,13 +90,21 @@ export default function ChatList() {
           className="flex items-center gap-5 p-5 cursor-pointer border-b border-b-[#dddddd35]"
         >
           <img
-            src={chat.user?.avatar || "/public/avatar.png"}
+            src={
+              chat.user.blocked.includes(currentUser.id)
+                ? "/public/avatar.png"
+                : chat.user?.avatar || "/public/avatar.png"
+            }
             alt="User Avatar"
             className="w-[50px] h-[50px] rounded-full object-cover"
           />
 
           <div className="flex flex-col gap-[10px]">
-            <span className="font-medium">{chat.user?.username}</span>
+            <span className="font-medium">
+              {chat.user.blocked.includes(currentUser.id)
+                ? "User"
+                : chat.user.username}
+            </span>
             <p className="text-sm font-light">{chat.lastMessage}</p>
           </div>
         </div>
