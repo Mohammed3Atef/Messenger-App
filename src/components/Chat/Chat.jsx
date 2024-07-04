@@ -1,39 +1,39 @@
+import { useEffect, useRef, useState } from "react";
 import EmojiPicker from "emoji-picker-react";
 import {
+  arrayUnion,
   doc,
   getDoc,
   onSnapshot,
   updateDoc,
-  arrayUnion,
 } from "firebase/firestore";
-import { useEffect, useRef, useState } from "react";
 import { db } from "../../library/firebase";
 import { useChatStore } from "../../library/chatStore";
 import { useUserStore } from "../../library/userStore";
 import upload from "../../library/upload";
 
 export default function Chat() {
+  const [chat, setChat] = useState({ messages: [] }); // Initialize with an empty array for messages
   const [openEmoji, setOpenEmoji] = useState(false);
   const [textMessage, setTextMessage] = useState("");
-  const [chat, setChat] = useState();
   const [img, setImg] = useState({
     file: null,
     url: "",
   });
 
+  const { currentUser } = useUserStore();
   const { chatId, user, isCurrentUserBlocked, isReceiverBlocked } =
     useChatStore();
-  const { currentUser } = useUserStore();
 
   const endRef = useRef(null);
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chat]);
+  }, [chat.messages.length]); // Use chat.messages.length for dependency
 
   useEffect(() => {
     const unSub = onSnapshot(doc(db, "chats", chatId), (res) => {
-      setChat(res.data());
+      setChat({ messages: res.data().messages || [] }); // Ensure messages array is initialized
     });
     return () => {
       unSub();
@@ -49,30 +49,38 @@ export default function Chat() {
     if (e.target.files[0]) {
       setImg({
         file: e.target.files[0],
-        url: URL.createObjectURL(e.target.files[0]),
+        url: URL.createObjectURL(e.target.files[0]), // Store URL locally for display
       });
     }
   };
 
   const handleSend = async () => {
-    if (textMessage === "") return;
+    if (textMessage === "" && !img.url) return;
 
+    if (isCurrentUserBlocked) {
+      console.log("You are blocked and cannot send messages.");
+      return;
+    }
+
+    let imgUrl = null;
     try {
-      let imgUrl = null;
       if (img.file) {
-        imgUrl = await upload(img.file);
+        imgUrl = await upload(img.file); // Upload image and get URL from upload function
       }
 
+      // Send message including image URL if uploaded, but only store locally if not blocked
       const newMessage = {
         senderId: currentUser.id,
-        text: textMessage,
+        textMessage,
         createdAt: new Date(),
-        ...(imgUrl && { img: imgUrl }),
+        ...(imgUrl && { img: imgUrl }), // Include img URL if uploaded
       };
 
-      await updateDoc(doc(db, "chats", chatId), {
-        messages: arrayUnion(newMessage),
-      });
+      if (!isReceiverBlocked) {
+        await updateDoc(doc(db, "chats", chatId), {
+          messages: arrayUnion(newMessage),
+        });
+      }
 
       const userIDs = [currentUser.id, user.id];
       userIDs.forEach(async (id) => {
@@ -85,7 +93,8 @@ export default function Chat() {
           );
 
           userChatsData.chats[chatIndex].lastMessage = textMessage;
-          userChatsData.chats[chatIndex].isSeen = id === currentUser.id;
+          userChatsData.chats[chatIndex].isSeen =
+            id === currentUser.id ? true : false;
           userChatsData.chats[chatIndex].updatedAt = Date.now();
 
           await updateDoc(userChatsRef, {
@@ -95,31 +104,28 @@ export default function Chat() {
       });
     } catch (err) {
       console.error("Error sending message:", err);
+    } finally {
+      setImg({ file: null, url: "" }); // Clear image state after sending
+      setTextMessage(""); // Clear text message state after sending
     }
-
-    setImg({ file: null, url: "" });
-    setTextMessage("");
   };
 
   return (
-    <div className="flex-[2] border-x border-x-[#dddddd35] h-full flex flex-col">
-      {/* Header */}
+    <div className="flex-2 border-x border-x-[#dddddd35] h-full flex flex-col">
       <div className="p-5 flex items-center justify-between border-b border-b-[#dddddd35]">
-        {/* User Info */}
         <div className="flex items-center gap-5">
           <img
-            src={user?.avatar || "/public/mo.jpg"}
+            src={user?.avatar || "/public/avatar.png"}
             alt="avatar"
             className="w-[60px] h-[60px] rounded-full object-cover"
           />
-          <div className="flex flex-col gap-[5px]">
+          <div className="flex flex-col gap-5">
             <span className="text-xl font-bold">{user?.username}</span>
             <p className="text-sm font-light text-[#a5a5a5]">
-              Lorem ipsum dolor, sit amet.
+              {user?.status || "Online"}
             </p>
           </div>
         </div>
-        {/* Actions */}
         <div className="flex gap-5">
           <img
             src="/public/phone.png"
@@ -139,12 +145,18 @@ export default function Chat() {
         </div>
       </div>
 
-      {/* Messages */}
       <div className="p-5 flex-1 overflow-auto flex flex-col gap-5">
-        {chat?.messages?.map((message) => (
-          <div key={message?.createdAt}>
+        {chat.messages.map((message, index) => (
+          <div
+            key={index}
+            className={`${
+              message.senderId === currentUser.id
+                ? "self-end max-w-[70%] flex gap-5"
+                : "self-start max-w-[70%] flex gap-5"
+            }`}
+          >
             {message.senderId !== currentUser?.id ? (
-              <div className="max-w-[70%] flex gap-5 self-start">
+              <>
                 <img
                   src={message.img || "/public/mo.jpg"}
                   alt="avatar"
@@ -152,7 +164,7 @@ export default function Chat() {
                 />
                 <div className="flex-1 flex flex-col gap-[5px]">
                   <p className="p-5 bg-[rgba(17,25,40,0.3)] rounded-[10px]">
-                    {message.text}
+                    {message.textMessage}
                   </p>
                   <span className="text-[13px]">
                     {new Date(
@@ -160,40 +172,30 @@ export default function Chat() {
                     ).toLocaleString()}
                   </span>
                 </div>
-              </div>
+              </>
             ) : (
-              <div className="max-w-[70%] self-end flex gap-5">
-                <div className="flex-1 flex flex-col gap-[5px]">
-                  <p className="bg-[#5283fe] p-5 rounded-[10px]">
-                    {message.text}
-                  </p>
-                  <span className="text-[13px]">
-                    {new Date(
-                      message.createdAt.seconds * 1000
-                    ).toLocaleString()}
-                  </span>
-                </div>
+              <div className="flex-1 flex flex-col gap-[5px]">
+                {message.img && (
+                  <img
+                    src={message.img}
+                    alt="Uploaded image"
+                    className="rounded-[10px] max-w-[100%]"
+                  />
+                )}
+                <p className="bg-[#5183fe] p-5 rounded-[10px]">
+                  {message.textMessage}
+                </p>
+                <span className="text-[13px]">
+                  {new Date(message.createdAt.seconds * 1000).toLocaleString()}
+                </span>
               </div>
             )}
           </div>
         ))}
-        {img.url && (
-          <div className="max-w-[70%] self-end">
-            <div className="gap-[5px] flex flex-col">
-              <img
-                src={img.url}
-                alt="Uploaded image"
-                className="rounded-[10px]"
-              />
-            </div>
-          </div>
-        )}
         <div ref={endRef}></div>
       </div>
 
-      {/* Footer */}
       <div className="p-5 mt-auto flex items-center justify-between gap-5 border-t border-t-[#dddddd35]">
-        {/* Media Icons */}
         <div className="flex gap-5">
           <label htmlFor="file">
             <img
@@ -220,7 +222,6 @@ export default function Chat() {
             className="w-5 h-5 cursor-pointer"
           />
         </div>
-        {/* Text Input */}
         <input
           type="text"
           placeholder={
@@ -228,12 +229,11 @@ export default function Chat() {
               ? "You cannot send a message"
               : "Type a message..."
           }
-          className="flex-1 bg-[rgba(17,25,40,0.5)] border-0 outline-0 p-5 rounded-[10px] text-base  disabled:cursor-not-allowed"
+          className="flex-1 bg-[rgba(17,25,40,0.5)] border-0 outline-0 p-5 rounded-[10px] text-base disabled:cursor-not-allowed"
           value={textMessage}
           onChange={(e) => setTextMessage(e.target.value)}
           disabled={isCurrentUserBlocked || isReceiverBlocked}
         />
-        {/* Emoji Picker */}
         <div className="relative">
           <img
             src="/public/emoji.png"
@@ -247,7 +247,6 @@ export default function Chat() {
             </div>
           )}
         </div>
-        {/* Send Button */}
         <button
           disabled={isCurrentUserBlocked || isReceiverBlocked}
           onClick={handleSend}

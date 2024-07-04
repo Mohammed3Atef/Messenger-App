@@ -6,9 +6,9 @@ import { db } from "../../library/firebase";
 import { useChatStore } from "../../library/chatStore";
 
 export default function ChatList() {
-  const [chats, SetChats] = useState([]);
-  const [addMode, SetAddMode] = useState(false);
-  const [input, SetInput] = useState("");
+  const [chats, setChats] = useState([]);
+  const [addMode, setAddMode] = useState(false);
+  const [input, setInput] = useState("");
 
   const { currentUser } = useUserStore();
   const { chatId, changeChat } = useChatStore();
@@ -28,7 +28,7 @@ export default function ChatList() {
           return { ...item, user };
         });
         const chatData = await Promise.all(promises);
-        SetChats(chatData.sort((a, b) => b.updatedAt - a.updatedAt));
+        setChats(chatData.sort((a, b) => b.updatedAt - a.updatedAt));
       }
     );
 
@@ -51,11 +51,11 @@ export default function ChatList() {
 
     try {
       await updateDoc(userChatsRef, {
-        chars: userChats,
+        chats: userChats,
       });
       changeChat(chat.chatId, chat.user);
     } catch (err) {
-      console.log(err);
+      console.log("Error updating chat:", err);
     }
   };
 
@@ -71,27 +71,27 @@ export default function ChatList() {
           <input
             type="text"
             placeholder="Search"
-            className="bg-transparent outline-0	border-0	flex-1"
-            onChange={(e) => SetInput(e.target.value)}
+            className="bg-transparent outline-0 border-0 flex-1"
+            onChange={(e) => setInput(e.target.value)}
           />
         </div>
         <img
           src={addMode ? "/public/minus.png" : "/public/plus.png"}
           alt=""
           className="w-9 h-9 bg-[rgba(17,25,40,0.5)] p-2.5 rounded-md cursor-pointer"
-          onClick={() => SetAddMode((open) => !open)}
+          onClick={() => setAddMode((open) => !open)}
         />
       </div>
       {filteredChats.map((chat) => (
         <div
-          style={{ backgroundColor: chat?.isSeen ? "transparent" : "#5183fe" }}
-          onClick={() => handleSelect(chat)}
           key={chat.chatId}
+          onClick={() => handleSelect(chat)}
           className="flex items-center gap-5 p-5 cursor-pointer border-b border-b-[#dddddd35]"
+          style={{ backgroundColor: chat?.isSeen ? "transparent" : "#5183fe" }}
         >
           <img
             src={
-              chat.user.blocked.includes(currentUser.id)
+              chat.user?.blocked?.includes(currentUser.id)
                 ? "/public/avatar.png"
                 : chat.user?.avatar || "/public/avatar.png"
             }
@@ -101,9 +101,9 @@ export default function ChatList() {
 
           <div className="flex flex-col gap-[10px]">
             <span className="font-medium">
-              {chat.user.blocked.includes(currentUser.id)
+              {chat.user?.blocked?.includes(currentUser.id)
                 ? "User"
-                : chat.user.username}
+                : chat.user?.username || "Unknown User"}
             </span>
             <p className="text-sm font-light">{chat.lastMessage}</p>
           </div>

@@ -11,7 +11,7 @@ export default function UserInfo() {
           alt="user image"
           className="w-[50px] h-[50px] rounded-full object-cover"
         />
-        <h2 className="">{currentUser.username}</h2>
+        <h2>{currentUser.username}</h2>
       </div>
       <div className="flex gap-5">
         <img

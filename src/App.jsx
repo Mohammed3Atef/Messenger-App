@@ -21,7 +21,7 @@ function App() {
       fetchUserInfo(user?.uid);
     });
     return () => {
-      unSub;
+      unSub();
     };
   }, [fetchUserInfo]);
   if (isLoading)

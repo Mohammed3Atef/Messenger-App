@@ -11,7 +11,6 @@ import {
 } from "firebase/firestore";
 import { db } from "../../../library/firebase";
 import { useState } from "react";
-import { update } from "firebase/database";
 import { useUserStore } from "../../../library/userStore";
 
 export default function AddUser() {
@@ -27,17 +26,24 @@ export default function AddUser() {
       const userRef = collection(db, "users");
       const q = query(userRef, where("username", "==", username));
       const querySnapShot = await getDocs(q);
+
       if (!querySnapShot.empty) {
         setUser(querySnapShot.docs[0].data());
+      } else {
+        setUser(null);
+        console.log("User not found.");
       }
     } catch (err) {
-      console.log(err);
+      console.error("Error searching for user:", err);
     }
   };
 
   const handleAddUser = async () => {
+    if (!user) return;
+
     const chatRef = collection(db, "chats");
     const userChatRef = collection(db, "userchats");
+
     try {
       const newChatRef = doc(chatRef);
       await setDoc(newChatRef, {
@@ -53,6 +59,7 @@ export default function AddUser() {
           updatedAt: Date.now(),
         }),
       });
+
       await updateDoc(doc(userChatRef, currentUser.id), {
         chats: arrayUnion({
           chatId: newChatRef.id,
@@ -61,7 +68,9 @@ export default function AddUser() {
           updatedAt: Date.now(),
         }),
       });
-    } catch (err) {}
+    } catch (err) {
+      console.error("Error adding user to chat:", err);
+    }
   };
 
   return (
@@ -81,7 +90,7 @@ export default function AddUser() {
         <div className="mt-[50px] flex items-center justify-between">
           <div className="flex items-center gap-5">
             <img
-              src={user.avatar || `/public/avatar.png`}
+              src={user.avatar || "/public/avatar.png"}
               alt="avatar"
               className="w-[50px] h-[50px] rounded-full object-cover"
             />
