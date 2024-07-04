@@ -42,7 +42,7 @@ function App() {
       ) : (
         <Login />
       )}
-      <Notification />;
+      <Notification />
     </div>
   );
 }

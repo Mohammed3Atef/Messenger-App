@@ -115,7 +115,7 @@ export default function Chat() {
       <div className="p-5 flex items-center justify-between border-b border-b-[#dddddd35]">
         <div className="flex items-center gap-5">
           <img
-            src={user?.avatar || "/public/avatar.png"}
+            src={user?.avatar || "/public/avatar.jpg"}
             alt="avatar"
             className="w-[60px] h-[60px] rounded-full object-cover"
           />
@@ -128,17 +128,17 @@ export default function Chat() {
         </div>
         <div className="flex gap-5">
           <img
-            src="/public/phone.png"
+            src="/public/phone.jpg"
             alt="phone"
             className="w-5 h-5 cursor-pointer"
           />
           <img
-            src="/public/video.png"
+            src="/public/video.jpg"
             alt="video"
             className="w-5 h-5 cursor-pointer"
           />
           <img
-            src="/public/info.png"
+            src="/public/info.jpg"
             alt="info"
             className="w-5 h-5 cursor-pointer"
           />
@@ -199,7 +199,7 @@ export default function Chat() {
         <div className="flex gap-5">
           <label htmlFor="file">
             <img
-              src="/public/img.png"
+              src="/public/img.jpg"
               alt="img"
               className="w-5 h-5 cursor-pointer"
             />
@@ -212,12 +212,12 @@ export default function Chat() {
             onChange={handleImg}
           />
           <img
-            src="/public/camera.png"
+            src="/public/camera.jpg"
             alt="camera"
             className="w-5 h-5 cursor-pointer"
           />
           <img
-            src="/public/mic.png"
+            src="/public/mic.jpg"
             alt="mic"
             className="w-5 h-5 cursor-pointer"
           />
@@ -236,7 +236,7 @@ export default function Chat() {
         />
         <div className="relative">
           <img
-            src="/public/emoji.png"
+            src="/public/emoji.jpg"
             alt="emoji"
             className="w-5 h-5 cursor-pointer"
             onClick={() => setOpenEmoji((open) => !open)}

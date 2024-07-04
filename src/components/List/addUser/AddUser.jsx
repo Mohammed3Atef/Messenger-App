@@ -90,7 +90,7 @@ export default function AddUser() {
         <div className="mt-[50px] flex items-center justify-between">
           <div className="flex items-center gap-5">
             <img
-              src={user.avatar || "/public/avatar.png"}
+              src={user.avatar || "/public/avatar.jpg"}
               alt="avatar"
               className="w-[50px] h-[50px] rounded-full object-cover"
             />

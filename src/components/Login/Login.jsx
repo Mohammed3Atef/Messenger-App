@@ -122,7 +122,7 @@ export default function Login() {
             className="w-full flex items-center justify-between cursor-pointer underline"
           >
             <img
-              src={avatar.url || "/public/avatar.png"}
+              src={avatar.url || "/public/avatar.jpg"}
               alt="avatar"
               className="w-[50px] h-[50px] rounded-[10px] object-cover opacity-60"
             />

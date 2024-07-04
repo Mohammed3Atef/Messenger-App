@@ -67,7 +67,7 @@ export default function ChatList() {
     <div className="flex-1 overflow-auto">
       <div className="flex items-center gap-5 p-5">
         <div className="flex-1 bg-[rgba(17,25,40,0.5)] flex items-center gap-5 rounded-xl p-2.5">
-          <img src="/public/search.png" alt="search" className="w-5 h-5" />
+          <img src="/public/search.jpg" alt="search" className="w-5 h-5" />
           <input
             type="text"
             placeholder="Search"
@@ -76,7 +76,7 @@ export default function ChatList() {
           />
         </div>
         <img
-          src={addMode ? "/public/minus.png" : "/public/plus.png"}
+          src={addMode ? "/public/minus.jpg" : "/public/plus.jpg"}
           alt=""
           className="w-9 h-9 bg-[rgba(17,25,40,0.5)] p-2.5 rounded-md cursor-pointer"
           onClick={() => setAddMode((open) => !open)}
@@ -92,8 +92,8 @@ export default function ChatList() {
           <img
             src={
               chat.user?.blocked?.includes(currentUser.id)
-                ? "/public/avatar.png"
-                : chat.user?.avatar || "/public/avatar.png"
+                ? "/public/avatar.jpg"
+                : chat.user?.avatar || "/public/avatar.jpg"
             }
             alt="User Avatar"
             className="w-[50px] h-[50px] rounded-full object-cover"

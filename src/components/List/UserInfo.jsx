@@ -7,7 +7,7 @@ export default function UserInfo() {
     <div className="flex items-center justify-between p-5">
       <div className="flex items-center gap-5">
         <img
-          src={currentUser.avatar || "/public/avatar.png"}
+          src={currentUser.avatar || "/public/avatar.jpg"}
           alt="user image"
           className="w-[50px] h-[50px] rounded-full object-cover"
         />
@@ -15,17 +15,17 @@ export default function UserInfo() {
       </div>
       <div className="flex gap-5">
         <img
-          src="/public/more.png"
+          src="/public/more.jpg"
           alt="more.."
           className="w-5 h-5 cursor-pointer"
         />
         <img
-          src="/public/video.png"
+          src="/public/video.jpg"
           alt="video"
           className="w-5 h-5 cursor-pointer"
         />
         <img
-          src="/public/edit.png"
+          src="/public/edit.jpg"
           alt="edit"
           className="w-5 h-5 cursor-pointer"
         />
