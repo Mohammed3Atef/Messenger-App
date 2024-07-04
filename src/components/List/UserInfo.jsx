@@ -1,4 +1,7 @@
 import { useUserStore } from "../../library/userStore";
+import edit from "../../assets/imgs/edit.jpg";
+import more from "../../assets/imgs/more.jpg";
+import video from "../../assets/imgs/video.jpg";
 
 export default function UserInfo() {
   const { currentUser } = useUserStore();
@@ -14,21 +17,9 @@ export default function UserInfo() {
         <h2>{currentUser.username}</h2>
       </div>
       <div className="flex gap-5">
-        <img
-          src="/public/more.jpg"
-          alt="more.."
-          className="w-5 h-5 cursor-pointer"
-        />
-        <img
-          src="/public/video.jpg"
-          alt="video"
-          className="w-5 h-5 cursor-pointer"
-        />
-        <img
-          src="/public/edit.jpg"
-          alt="edit"
-          className="w-5 h-5 cursor-pointer"
-        />
+        <img src={more} alt="more.." className="w-5 h-5 cursor-pointer" />
+        <img src={video} alt="video" className="w-5 h-5 cursor-pointer" />
+        <img src={edit} alt="edit" className="w-5 h-5 cursor-pointer" />
       </div>
     </div>
   );

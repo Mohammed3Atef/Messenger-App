@@ -11,7 +11,6 @@ import { db } from "../../library/firebase";
 import { useChatStore } from "../../library/chatStore";
 import { useUserStore } from "../../library/userStore";
 import upload from "../../library/upload";
-
 export default function Chat() {
   const [chat, setChat] = useState({ messages: [] }); // Initialize with an empty array for messages
   const [openEmoji, setOpenEmoji] = useState(false);
