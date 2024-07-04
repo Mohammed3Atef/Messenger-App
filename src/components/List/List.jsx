@@ -3,7 +3,7 @@ import UserInfo from "./UserInfo";
 
 export default function List() {
   return (
-    <div className="flex-1 flex flex-col">
+    <div className="flex-1 flex flex-col hidden lg:block">
       <UserInfo />
       <ChatList />
     </div>
