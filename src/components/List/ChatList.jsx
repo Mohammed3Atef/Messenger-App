@@ -7,6 +7,7 @@ import { useChatStore } from "../../library/chatStore";
 import minus from "../../assets/images/minus.jpg";
 import plus from "../../assets/images/plus.jpg";
 import avatar from "../../assets/images/avatar.jpg";
+import search from "../../assets/images/search.jpg";
 
 export default function ChatList() {
   const [chats, setChats] = useState([]);
@@ -70,7 +71,7 @@ export default function ChatList() {
     <div className="flex-1 overflow-auto">
       <div className="flex items-center gap-5 p-5">
         <div className="flex-1 bg-[rgba(17,25,40,0.5)] flex items-center gap-5 rounded-xl p-2.5">
-          <img src="/public/search.jpg" alt="search" className="w-5 h-5" />
+          <img src={search} alt="search" className="w-5 h-5" />
           <input
             type="text"
             placeholder="Search"
