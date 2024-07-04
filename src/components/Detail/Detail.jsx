@@ -39,7 +39,7 @@ export default function Detail() {
   };
 
   return (
-    <div className="flex-1 hidden lg:block">
+    <div className="flex-1">
       <div className="px-5 py-[30px] flex flex-col items-center gap-[15px] border-b border-b-[#dddddd35]">
         <img
           src={user?.avatar || "../../../public/avatar.jpg"}

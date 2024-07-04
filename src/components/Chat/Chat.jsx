@@ -118,8 +118,8 @@ export default function Chat() {
   };
 
   return (
-    <div className="flex-2 border-x border-x-[#dddddd35] h-full flex flex-col w-full ">
-      <div className="lg:p-5 flex items-center justify-between border-b border-b-[#dddddd35] p-2.5">
+    <div className="flex-2 border-x border-x-[#dddddd35] h-full flex flex-col">
+      <div className="p-5 flex items-center justify-between border-b border-b-[#dddddd35]">
         <div className="flex items-center gap-5">
           <img
             src={user?.avatar || avatar}
@@ -140,7 +140,7 @@ export default function Chat() {
         </div>
       </div>
 
-      <div className="lg:p-5 p-2.5 flex-1 overflow-auto flex flex-col gap-5">
+      <div className="p-5 flex-1 overflow-auto flex flex-col gap-5">
         {chat.messages.map((message, index) => (
           <div
             key={index}
@@ -190,14 +190,10 @@ export default function Chat() {
         <div ref={endRef}></div>
       </div>
 
-      <div className="lg:p-5 p-2.5 mt-auto flex items-center justify-between gap-5 border-t border-t-[#dddddd35]">
-        <div className="flex gap-[10px] lg:gap-5">
+      <div className="p-5 mt-auto flex items-center justify-between gap-5 border-t border-t-[#dddddd35]">
+        <div className="flex gap-5">
           <label htmlFor="file">
-            <img
-              src={image}
-              alt="img"
-              className="w-2.5 h-2.5 lg:w-5 lg:h-5 cursor-pointer"
-            />
+            <img src={image} alt="img" className="w-5 h-5 cursor-pointer" />
           </label>
           <input
             type="file"
@@ -206,51 +202,38 @@ export default function Chat() {
             className="hidden"
             onChange={handleImg}
           />
-          <img
-            src={camera}
-            alt="camera"
-            className="w-2.5 h-2.5 lg:w-5 lg:h-5 cursor-pointer"
-          />
-          <img
-            src={mic}
-            alt="mic"
-            className="w-2.5 h-2.5 lg:w-5 lg:h-5 cursor-pointer"
-          />
+          <img src={camera} alt="camera" className="w-5 h-5 cursor-pointer" />
+          <img src={mic} alt="mic" className="w-5 h-5 cursor-pointer" />
         </div>
-        <div className="relative flex">
-          <input
-            type="text"
-            placeholder={
-              isCurrentUserBlocked || isReceiverBlocked
-                ? "You cannot send a message"
-                : "Type a message..."
-            }
-            className="flex-1 bg-[rgba(17,25,40,0.5)] border-0 outline-0 p-2.5 lg:p-5 rounded-[10px] text-base disabled:cursor-not-allowed"
-            value={textMessage}
-            onChange={(e) => setTextMessage(e.target.value)}
-            disabled={isCurrentUserBlocked || isReceiverBlocked}
+        <input
+          type="text"
+          placeholder={
+            isCurrentUserBlocked || isReceiverBlocked
+              ? "You cannot send a message"
+              : "Type a message..."
+          }
+          className="flex-1 bg-[rgba(17,25,40,0.5)] border-0 outline-0 p-5 rounded-[10px] text-base disabled:cursor-not-allowed"
+          value={textMessage}
+          onChange={(e) => setTextMessage(e.target.value)}
+          disabled={isCurrentUserBlocked || isReceiverBlocked}
+        />
+        <div className="relative">
+          <img
+            src={emoji}
+            alt="emoji"
+            className="w-5 h-5 cursor-pointer"
+            onClick={() => setOpenEmoji((open) => !open)}
           />
-          <div className="absolute right-2.5 top-[17px] lg:top-[22px]">
-            <div className="relative">
-              <img
-                src={emoji}
-                alt="emoji"
-                className="w-2.5 h-2.5 lg:w-5 lg:h-5 cursor-pointer"
-                onClick={() => setOpenEmoji((open) => !open)}
-              />
-              {openEmoji && (
-                <div className="absolute left-0 bottom-[50px]">
-                  <EmojiPicker onEmojiClick={handleEmoji} />
-                </div>
-              )}
+          {openEmoji && (
+            <div className="absolute left-0 bottom-[50px]">
+              <EmojiPicker onEmojiClick={handleEmoji} />
             </div>
-          </div>
+          )}
         </div>
-
         <button
           disabled={isCurrentUserBlocked || isReceiverBlocked}
           onClick={handleSend}
-          className="bg-[#5183fe] py-[5px] px-2.5 lg:px-5 lg:py-2.5 border-0 rounded-[5px] cursor-pointer duration-[0.3s] hover:bg-[#0653b7] disabled:bg-[#5182feb4] disabled:cursor-not-allowed"
+          className="bg-[#5183fe] px-5 py-2.5 border-0 rounded-[5px] cursor-pointer duration-[0.3s] hover:bg-[#0653b7] disabled:bg-[#5182feb4] disabled:cursor-not-allowed"
         >
           Send
         </button>
