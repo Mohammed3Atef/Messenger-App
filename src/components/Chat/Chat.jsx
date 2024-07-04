@@ -11,13 +11,13 @@ import { db } from "../../library/firebase";
 import { useChatStore } from "../../library/chatStore";
 import { useUserStore } from "../../library/userStore";
 import upload from "../../library/upload";
-import { avatar } from "../../assets/images/avatar.jpg";
-import { phone } from "../../assets/images/phone.jpg";
-import { video } from "../../assets/images/video.jpg";
-import { info } from "../../assets/images/info.jpg";
-import { camera } from "../../assets/images/camera.jpg";
-import { mic } from "../../assets/images/mic.jpg";
-import { emoji } from "../../assets/images/emoji.jpg";
+import avatar from "../../assets/images/avatar.jpg";
+import phone from "../../assets/images/phone.jpg";
+import video from "../../assets/images/video.jpg";
+import info from "../../assets/images/info.jpg";
+import camera from "../../assets/images/camera.jpg";
+import mic from "../../assets/images/mic.jpg";
+import emoji from "../../assets/images/emoji.jpg";
 
 export default function Chat() {
   const [chat, setChat] = useState({ messages: [] });

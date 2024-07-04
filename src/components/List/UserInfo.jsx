@@ -1,8 +1,8 @@
 import { useUserStore } from "../../library/userStore";
-import { edit } from "../../assets/images/edit.jpg";
-import { more } from "../../assets/images/more.jpg";
-import { video } from "../../assets/images/video.jpg";
-import { avatar } from "../../assets/images/avatar.jpg";
+import edit from "../../assets/images/edit.jpg";
+import more from "../../assets/images/more.jpg";
+import video from "../../assets/images/video.jpg";
+import avatar from "../../assets/images/avatar.jpg";
 
 export default function UserInfo() {
   const { currentUser } = useUserStore();
