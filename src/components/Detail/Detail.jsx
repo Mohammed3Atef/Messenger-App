@@ -7,7 +7,7 @@ import {
   arrowDown,
   mo,
   download,
-} from "../../assets/imgs/arrowUp.jpg";
+} from "../../assets/images/arrowUp.jpg";
 
 export default function Detail() {
   const {

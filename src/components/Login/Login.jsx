@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { auth, db } from "../../library/firebase";
 import { doc, setDoc } from "firebase/firestore";
 import upload from "../../library/upload";
-import avatarr from "../../assets/imgs/avatar.jpg";
+import avatarr from "../../assets/images/avatar.jpg";
 
 export default function Login() {
   const [avatar, setAvatar] = useState({

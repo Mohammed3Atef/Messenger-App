@@ -19,7 +19,7 @@ import {
   camera,
   mic,
   emoji,
-} from "../../assets/imgs/avatar.jpg";
+} from "../../assets/images/avatar.jpg";
 
 export default function Chat() {
   const [chat, setChat] = useState({ messages: [] });

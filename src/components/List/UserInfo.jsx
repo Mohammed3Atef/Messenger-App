@@ -1,5 +1,5 @@
 import { useUserStore } from "../../library/userStore";
-import { edit, more, video, avatar } from "../../assets/imgs/edit.jpg";
+import { edit, more, video, avatar } from "../../assets/images/edit.jpg";
 
 export default function UserInfo() {
   const { currentUser } = useUserStore();
