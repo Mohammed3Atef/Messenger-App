@@ -18,6 +18,7 @@ import info from "../../assets/images/info.jpg";
 import camera from "../../assets/images/camera.jpg";
 import mic from "../../assets/images/mic.jpg";
 import emoji from "../../assets/images/emoji.jpg";
+import image from "../../assets/images/img.jpg";
 
 export default function Chat() {
   const [chat, setChat] = useState({ messages: [] });
