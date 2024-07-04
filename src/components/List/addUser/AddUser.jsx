@@ -12,6 +12,7 @@ import {
 import { db } from "../../../library/firebase";
 import { useState } from "react";
 import { useUserStore } from "../../../library/userStore";
+import avatar from "../../assets/imgs/avatar.jpg";
 
 export default function AddUser() {
   const [user, setUser] = useState(null);
@@ -90,7 +91,7 @@ export default function AddUser() {
         <div className="mt-[50px] flex items-center justify-between">
           <div className="flex items-center gap-5">
             <img
-              src={user.avatar || "/public/avatar.jpg"}
+              src={user.avatar || avatar}
               alt="avatar"
               className="w-[50px] h-[50px] rounded-full object-cover"
             />

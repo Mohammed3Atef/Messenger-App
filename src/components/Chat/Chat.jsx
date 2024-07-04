@@ -11,8 +11,18 @@ import { db } from "../../library/firebase";
 import { useChatStore } from "../../library/chatStore";
 import { useUserStore } from "../../library/userStore";
 import upload from "../../library/upload";
+import {
+  avatar,
+  phone,
+  video,
+  info,
+  camera,
+  mic,
+  emoji,
+} from "../../assets/imgs/avatar.jpg";
+
 export default function Chat() {
-  const [chat, setChat] = useState({ messages: [] }); // Initialize with an empty array for messages
+  const [chat, setChat] = useState({ messages: [] });
   const [openEmoji, setOpenEmoji] = useState(false);
   const [textMessage, setTextMessage] = useState("");
   const [img, setImg] = useState({
@@ -28,11 +38,11 @@ export default function Chat() {
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chat.messages.length]); // Use chat.messages.length for dependency
+  }, [chat.messages.length]);
 
   useEffect(() => {
     const unSub = onSnapshot(doc(db, "chats", chatId), (res) => {
-      setChat({ messages: res.data().messages || [] }); // Ensure messages array is initialized
+      setChat({ messages: res.data().messages || [] });
     });
     return () => {
       unSub();
@@ -48,7 +58,7 @@ export default function Chat() {
     if (e.target.files[0]) {
       setImg({
         file: e.target.files[0],
-        url: URL.createObjectURL(e.target.files[0]), // Store URL locally for display
+        url: URL.createObjectURL(e.target.files[0]),
       });
     }
   };
@@ -64,15 +74,14 @@ export default function Chat() {
     let imgUrl = null;
     try {
       if (img.file) {
-        imgUrl = await upload(img.file); // Upload image and get URL from upload function
+        imgUrl = await upload(img.file);
       }
 
-      // Send message including image URL if uploaded, but only store locally if not blocked
       const newMessage = {
         senderId: currentUser.id,
         textMessage,
         createdAt: new Date(),
-        ...(imgUrl && { img: imgUrl }), // Include img URL if uploaded
+        ...(imgUrl && { img: imgUrl }),
       };
 
       if (!isReceiverBlocked) {
@@ -104,8 +113,8 @@ export default function Chat() {
     } catch (err) {
       console.error("Error sending message:", err);
     } finally {
-      setImg({ file: null, url: "" }); // Clear image state after sending
-      setTextMessage(""); // Clear text message state after sending
+      setImg({ file: null, url: "" });
+      setTextMessage("");
     }
   };
 
@@ -114,7 +123,7 @@ export default function Chat() {
       <div className="p-5 flex items-center justify-between border-b border-b-[#dddddd35]">
         <div className="flex items-center gap-5">
           <img
-            src={user?.avatar || "/public/avatar.jpg"}
+            src={user?.avatar || avatar}
             alt="avatar"
             className="w-[60px] h-[60px] rounded-full object-cover"
           />
@@ -126,21 +135,9 @@ export default function Chat() {
           </div>
         </div>
         <div className="flex gap-5">
-          <img
-            src="/public/phone.jpg"
-            alt="phone"
-            className="w-5 h-5 cursor-pointer"
-          />
-          <img
-            src="/public/video.jpg"
-            alt="video"
-            className="w-5 h-5 cursor-pointer"
-          />
-          <img
-            src="/public/info.jpg"
-            alt="info"
-            className="w-5 h-5 cursor-pointer"
-          />
+          <img src={phone} alt="phone" className="w-5 h-5 cursor-pointer" />
+          <img src={video} alt="video" className="w-5 h-5 cursor-pointer" />
+          <img src={info} alt="info" className="w-5 h-5 cursor-pointer" />
         </div>
       </div>
 
@@ -157,7 +154,7 @@ export default function Chat() {
             {message.senderId !== currentUser?.id ? (
               <>
                 <img
-                  src={message.img || "/public/mo.jpg"}
+                  src={message.img || avatar}
                   alt="avatar"
                   className="w-[30px] h-[30px] rounded-full object-cover"
                 />
@@ -197,11 +194,7 @@ export default function Chat() {
       <div className="p-5 mt-auto flex items-center justify-between gap-5 border-t border-t-[#dddddd35]">
         <div className="flex gap-5">
           <label htmlFor="file">
-            <img
-              src="/public/img.jpg"
-              alt="img"
-              className="w-5 h-5 cursor-pointer"
-            />
+            <img src={image} alt="img" className="w-5 h-5 cursor-pointer" />
           </label>
           <input
             type="file"
@@ -210,16 +203,8 @@ export default function Chat() {
             className="hidden"
             onChange={handleImg}
           />
-          <img
-            src="/public/camera.jpg"
-            alt="camera"
-            className="w-5 h-5 cursor-pointer"
-          />
-          <img
-            src="/public/mic.jpg"
-            alt="mic"
-            className="w-5 h-5 cursor-pointer"
-          />
+          <img src={camera} alt="camera" className="w-5 h-5 cursor-pointer" />
+          <img src={mic} alt="mic" className="w-5 h-5 cursor-pointer" />
         </div>
         <input
           type="text"
@@ -235,7 +220,7 @@ export default function Chat() {
         />
         <div className="relative">
           <img
-            src="/public/emoji.jpg"
+            src={emoji}
             alt="emoji"
             className="w-5 h-5 cursor-pointer"
             onClick={() => setOpenEmoji((open) => !open)}

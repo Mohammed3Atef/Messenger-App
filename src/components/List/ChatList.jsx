@@ -4,6 +4,7 @@ import { useUserStore } from "../../library/userStore";
 import { doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../../library/firebase";
 import { useChatStore } from "../../library/chatStore";
+import { minus, plus, avatar } from "../../assets/imgs/minus.jpg";
 
 export default function ChatList() {
   const [chats, setChats] = useState([]);
@@ -76,7 +77,7 @@ export default function ChatList() {
           />
         </div>
         <img
-          src={addMode ? "/public/minus.jpg" : "/public/plus.jpg"}
+          src={addMode ? minus : plus}
           alt=""
           className="w-9 h-9 bg-[rgba(17,25,40,0.5)] p-2.5 rounded-md cursor-pointer"
           onClick={() => setAddMode((open) => !open)}
@@ -92,8 +93,8 @@ export default function ChatList() {
           <img
             src={
               chat.user?.blocked?.includes(currentUser.id)
-                ? "/public/avatar.jpg"
-                : chat.user?.avatar || "/public/avatar.jpg"
+                ? avatar
+                : chat.user?.avatar || avatar
             }
             alt="User Avatar"
             className="w-[50px] h-[50px] rounded-full object-cover"

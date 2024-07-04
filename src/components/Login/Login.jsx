@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { auth, db } from "../../library/firebase";
 import { doc, setDoc } from "firebase/firestore";
 import upload from "../../library/upload";
+import avatarr from "../../assets/imgs/avatar.jpg";
 
 export default function Login() {
   const [avatar, setAvatar] = useState({
@@ -122,7 +123,7 @@ export default function Login() {
             className="w-full flex items-center justify-between cursor-pointer underline"
           >
             <img
-              src={avatar.url || "/public/avatar.jpg"}
+              src={avatar.url || avatarr}
               alt="avatar"
               className="w-[50px] h-[50px] rounded-[10px] object-cover opacity-60"
             />

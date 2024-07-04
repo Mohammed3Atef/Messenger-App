@@ -2,6 +2,12 @@ import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { useChatStore } from "../../library/chatStore";
 import { auth, db } from "../../library/firebase";
 import { useUserStore } from "../../library/userStore";
+import {
+  arrowUp,
+  arrowDown,
+  mo,
+  download,
+} from "../../assets/imgs/arrowUp.jpg";
 
 export default function Detail() {
   const {
@@ -49,7 +55,7 @@ export default function Detail() {
           <div className="flex items-center justify-between">
             <span>Chat Settings</span>
             <img
-              src="../../../public/arrowUp.jpg"
+              src={arrowUp}
               alt="setting"
               className="w-[30px] h-[30px] bg-[rgba(17,25,40,0.4)] p-2.5 rounded-full cursor-pointer"
             />
@@ -59,7 +65,7 @@ export default function Detail() {
           <div className="flex items-center justify-between">
             <span>Privacy & Help</span>
             <img
-              src="../../../public/arrowUp.jpg"
+              src={arrowUp}
               alt="setting"
               className="w-[30px] h-[30px] bg-[rgba(17,25,40,0.4)] p-2.5 rounded-full cursor-pointer"
             />
@@ -69,7 +75,7 @@ export default function Detail() {
           <div className="flex items-center justify-between">
             <span>Shared photos</span>
             <img
-              src="../../../public/arrowDown.jpg"
+              src={arrowDown}
               alt="setting"
               className="w-[30px] h-[30px] bg-[rgba(17,25,40,0.4)] p-2.5 rounded-full cursor-pointer"
             />
@@ -78,8 +84,8 @@ export default function Detail() {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-5">
                 <img
-                  src="../../../public/mo.jpg"
-                  alt=""
+                  src={mo}
+                  alt="mo"
                   className="w-[40px] h-[40px] rounded-[5px] object-cover"
                 />
                 <span className="text-sm text-[lightgray] font-light">
@@ -87,7 +93,7 @@ export default function Detail() {
                 </span>
               </div>
               <img
-                src="../../../public/download.jpg"
+                src={download}
                 alt="download"
                 className="w-[30px] h-[30px] bg-[rgba(17,25,40,0.4)] p-2.5 rounded-full cursor-pointer"
               />
@@ -98,7 +104,7 @@ export default function Detail() {
           <div className="flex items-center justify-between">
             <span>Shared Files</span>
             <img
-              src="../../../public/arrowUp.jpg"
+              src={arrowUp}
               alt="setting"
               className="w-[30px] h-[30px] bg-[rgba(17,25,40,0.4)] p-2.5 rounded-full cursor-pointer"
             />

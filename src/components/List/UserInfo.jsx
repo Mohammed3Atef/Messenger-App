@@ -1,7 +1,5 @@
 import { useUserStore } from "../../library/userStore";
-import edit from "../../assets/imgs/edit.jpg";
-import more from "../../assets/imgs/more.jpg";
-import video from "../../assets/imgs/video.jpg";
+import { edit, more, video, avatar } from "../../assets/imgs/edit.jpg";
 
 export default function UserInfo() {
   const { currentUser } = useUserStore();
@@ -10,7 +8,7 @@ export default function UserInfo() {
     <div className="flex items-center justify-between p-5">
       <div className="flex items-center gap-5">
         <img
-          src={currentUser.avatar || "/public/avatar.jpg"}
+          src={currentUser.avatar || avatar}
           alt="user image"
           className="w-[50px] h-[50px] rounded-full object-cover"
         />
