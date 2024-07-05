@@ -219,6 +219,7 @@ export default function Chat() {
         />
         <div className="relative">
           <img
+            src={emoji}
             alt="emoji"
             className="w-5 h-5 cursor-pointer"
             onClick={() => setOpenEmoji((open) => !open)}
